@@ -3,7 +3,6 @@ package com.umanizales.lists_prog2.service;
 import com.umanizales.lists_prog2.controller.dto.ResponseDTO;
 import com.umanizales.lists_prog2.exception.ListaSeException;
 import com.umanizales.lists_prog2.model.Boy;
-import com.umanizales.lists_prog2.model.BoysByLocation;
 import com.umanizales.lists_prog2.model.Location;
 import com.umanizales.lists_prog2.model.listase.ListSE;
 import org.springframework.http.HttpStatus;
@@ -13,11 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+//para que preste el sevicio
 @Service
 public class ListSeService {
     private ListSE listBoys;
     private List<Location> locations;
 
+    //metodo para poder separar el espacio de esa lista
     public ListSeService() {
         listBoys = new ListSE();
         initializeLocations();
@@ -42,14 +43,16 @@ public class ListSeService {
         return false;
     }
 
+    //cuando llamen al metodo adicionar, voy a responder con un mensaje, con unos datos y unos errores
     public ResponseEntity<ResponseDTO> addBoy(Boy boy) throws ListaSeException
     {
         if(!validateLocation(boy.getLocation()))
         {
             throw new ListaSeException("La ubicación ingresada no es válida");
         }
-
+        //llamo a mi lista de niños y le digo que se adicione niño
         listBoys.add(boy);
+        //le puse mi respuesta para cuando se adicione un niño
         return new ResponseEntity<>(
                 new ResponseDTO("Niño adicionado",true, null),
                 HttpStatus.OK);
@@ -65,6 +68,7 @@ public class ListSeService {
 
     }
 
+    //metodo para listar niños
     public ResponseEntity<ResponseDTO> listBoys() throws ListaSeException
     {
         if(listBoys.getHead()==null)
@@ -75,9 +79,12 @@ public class ListSeService {
                 new ResponseDTO("Satisfactorio",listBoys.getHead(), null),
                 HttpStatus.OK);
     }
+
     public ResponseEntity<ResponseDTO> invertList() throws ListaSeException
     {
+        //lista de niños se invierte
         listBoys.invert();
+        //además de que va a invertir la lista, me va a mostrar como queda de una vez
         return new ResponseEntity<>(
                 new ResponseDTO("Satisfactorio",listBoys.getHead(), null),
                 HttpStatus.OK);
@@ -135,8 +142,7 @@ public class ListSeService {
                 HttpStatus.OK);
     }
 
-    public ResponseEntity<ResponseDTO> getBoysByLocation()
-    {
+    /**public ResponseEntity<ResponseDTO> getBoysByLocation() throws ListaSeException {
         List<BoysByLocation> boysByLocations = new ArrayList<>();
         for(Location loc: locations)
         {
@@ -146,5 +152,6 @@ public class ListSeService {
         return new ResponseEntity<>(
                 new ResponseDTO("Satisfactorio",boysByLocations, null),
                 HttpStatus.OK);
-    }
+    }**/
+
 }

@@ -6,6 +6,7 @@ package com.umanizales.lists_prog2.model.listase;
  * ...
  */
 
+
 import com.umanizales.lists_prog2.exception.ListaSeException;
 import com.umanizales.lists_prog2.model.Boy;
 import lombok.Data;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ListSE {
+public class ListSE<count> {
     /**
      * Atributo que representa el inicio de la lista y es
      */
@@ -40,30 +41,38 @@ public class ListSE {
              */
             throw  new ListaSeException("La identificación ingresada ya existe");
         }
-        
+
+        //si la cabeza esta vacia
         if(head == null)
         {
+            //agregamos un niño y se lo asigna a la cabeza
             head = new Node(boy);
         }
         else
         {
+            //llamo a un ayudante para que se pare en la cabeza
             Node temp = head;
+            //mientras haya algo
             while(temp.getNext()!=null)
             {
+                //se pasa al siguiente
                 temp = temp.getNext();
             }
-            ///El quedo parado en el ultimo
+            ///se pasa de uno en uno hasta quedar parado en el ultimo porque ahi se adiciona el siguiente
             temp.setNext(new Node(boy));
         }
         count++;
     }
 
 
+    //metodo para adicionar niños al inicio
     public void addToStart(Boy boy) throws ListaSeException
     {
+        //se invoca al identificador para saber si el que vamos a agregar ya existe
         Boy boyExist= findByIdentification(boy.getIdentification());
         if(boyExist !=null)
         {
+           //si el niño que vamos a agregar ya existe entonces se le comunica al usuario
             throw  new ListaSeException("La identificación ingresada ya existe");
         }
         if( this.head==null)
@@ -79,11 +88,14 @@ public class ListSE {
         count++;
     }
 
+    //adicionar niños en la posición que deseemos
     public void addByPosition(Boy boy, int position) throws ListaSeException
     {
+        //se verifica si el niño que vamos a agragar ya existe validando la identificacion
         Boy boyExist= findByIdentification(boy.getIdentification());
         if(boyExist !=null)
         {
+            //si ya existe se le muestra al usuario un mensaje
             throw  new ListaSeException("La identificación ingresada ya existe");
         }
         /// Validación de la posicíon
@@ -118,13 +130,20 @@ public class ListSE {
         }
     }
 
+    //metodo de invertir
     public void invert() throws ListaSeException{
+        //si la cabeza es diferente de null
         if (this.head != null) {
             ListSE listTemp = new ListSE();
+            //recorrer la lista de principio a fin llamando al ayudante
+            //usar this es una buena practica para asegurarme de que me estoy refiriendo a mi atributo de instancia
             Node temp = this.head;
+            //mientras tempotal sea diferente de null
             while(temp != null)
             {
+                //se adiciona a la nueva lista
                 listTemp.addToStart(temp.getData());
+                //pasa al siguiente y como queda null o llega al ultimo se sale
                 temp = temp.getNext();
 
             }
@@ -133,8 +152,10 @@ public class ListSE {
 
 
     }
+    //cuenta cuantos niños tengo
     public int count() {
         int count = 0;
+        //se para en la cabeza
         if (this.head != null) {
             Node temp = this.head;
             while (temp != null)
@@ -147,6 +168,7 @@ public class ListSE {
     }
 
 
+    //metodo empleado para listar los niños
     public List<Boy> list() throws ListaSeException
     {
         if(this.head!=null)
@@ -164,6 +186,8 @@ public class ListSE {
         //return null;
 
     }
+
+    //metodo para cambiar los extremos
     public void changeXtremes() throws  ListaSeException{
         if (this.head != null && this.head.getNext() != null) {
             Boy start = this.head.getData();
@@ -234,7 +258,7 @@ public class ListSE {
          */
         Node temp= this.head;
         /**
-         * Creo un ccilo para recorrer la lista SE de principio a fin
+         * Creo un ciclo para recorrer la lista SE de principio a fin
          * llego al final cuando mi ayudante queda para en vacío (null)
          */
         while(temp!=null)
@@ -317,12 +341,58 @@ public class ListSE {
 
 
     ///Método que recibe el código de una ciudad y retorna la cantidad de niños
-    public int getCountBoysByLocation(String code)
-    {
+    /**public int getCountBoysByLocation(String code) throws ListaSeException {
         Node temp= this.getHead();
             int count=0;
             while(temp != null)
             {
+              public void variantBoys() throws ListaSeException
+                {
+                    validateListEmpty();
+                    ListSE kids= this.getListSeBoysByGender("MASCULINO");
+                    ListSE girls= this.getListSeBoysByGender("FEMENINO");
+                    ListSE minList= null;
+                    ListSE maxList= null;
+                    if(kids.getCount()> girls.getCount())
+                    {
+                        minList= girls;
+                        maxList = kids;
+                    }
+                    else
+                    {
+                        minList = kids;
+                        maxList = girls;
+                    }
+                    temp = minList.getHead();
+                    int pos=2;
+                    while(temp != null)
+                    {
+                        maxList.addByPosition(temp.getData(), pos);
+                        pos = pos +2;
+                        temp = temp.getNext();
+                    }
+                    this.head= maxList.getHead();
+
+                }**/
+
+                ///Método que recibe el código de una ciudad y retorna la cantidad de niños
+                /**public int getCountBoysByLocation(String code)
+                {
+                    temp = this.getHead();
+                    count = 0;
+                    while(temp != null)
+                    {
+                        if(temp.getData().getLocation().getCode().equals(code))
+                        {
+                            count++;
+                        }
+                        temp = temp.getNext();
+                    }
+                    return count;
+
+                }
+
+            }
                 if(temp.getData().getLocation().getCode().equals(code))
                 {
                     count++;
@@ -332,6 +402,10 @@ public class ListSE {
             return count;
 
     }
+
+    public int age (String age)**/
+
+
 
 }
 

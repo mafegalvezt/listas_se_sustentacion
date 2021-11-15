@@ -19,11 +19,13 @@ import javax.validation.constraints.Size;
  */
 
 @Data
+//se usa porque necesitamos que todos los metodos que use sean obligatorios cuando ingrese un niño
 @AllArgsConstructor
 public class Boy {
     @NotNull
     @NotEmpty
     @Size(min=2)
+    //atributo unico para cada niño
     private String identification;
     @NotNull
     @NotEmpty
@@ -31,9 +33,17 @@ public class Boy {
     private String name;
     @Positive
     private byte age;
+    @Valid
+    @NotNull
+    private String grade;
     @NotNull
     private Gender gender;
     @Valid
     @NotNull
     private Location location;
+    @Valid
+    @NotNull
+    private String RH;
+
+
 }

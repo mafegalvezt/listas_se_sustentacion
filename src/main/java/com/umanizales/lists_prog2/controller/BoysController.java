@@ -14,20 +14,28 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+//para poder decir como lo voy a llamar por la URL
 @RequestMapping(path= "boys")
 public class BoysController {
+    //para que lo inyecte
     @Autowired
+    //creo la capacidad de utilizar el servicio
     private ListSeService listSeService;
 
-    @PostMapping
+    @PostMapping(path= "add")
+    //metodo publico que recibe como parametro un niño con todos los datos, osea que capturo
     public ResponseEntity<ResponseDTO> addBoy(@RequestBody @Valid Boy boy) throws ListaSeException
     {
+        //me retorna lo que diga el servicio adicionando un niño
         return listSeService.addBoy(boy);
     }
-    @GetMapping
+    @GetMapping(path= "list")
+    //metodo para listar u obtener niños
     public ResponseEntity<ResponseDTO> listBoys() throws ListaSeException
+     //me retorna lo que dice el servicio
     {return listSeService.listBoys();}
 
+    //cuando llamen boys/invert se va a invertir la lista
     @GetMapping(path = "invert")
     public ResponseEntity<ResponseDTO> invertList() throws ListaSeException
     {
@@ -88,10 +96,35 @@ public class BoysController {
         return listSeService.variantList();
     }
 
-    @GetMapping(path = "boysbylocation")
-    public ResponseEntity<ResponseDTO> boysByLocation()
-    {
+   /** @GetMapping(path = "boysbylocation")
+    public ResponseEntity<ResponseDTO> boysByLocation() throws ListaSeException {
         return listSeService.getBoysByLocation();
-    }
+    }**/
+
+//metodo que me permite listar los niños de chinchina y me retorna lo que esta ubicado en el servicio
+   @GetMapping(path = "listBoyChinchina")
+   public ResponseEntity<ResponseDTO> listBoyChinchina(){return listaDeService.listBoyChinchina();}
+
+    //metodo que me permite listar los niños de manizales y me retorna lo que esta ubicado en el servicio
+    @GetMapping(path = "listBoyManizales")
+    public ResponseEntity<ResponseDTO> listBoyManizales(){return listaDeService.listBoyManizales();}
+
+    //metodo que me permite listar los niños de villamaria y me retorna lo que esta ubicado en el servicio
+    @GetMapping(path = "listBoyVillamaria")
+    public ResponseEntity<ResponseDTO> listBoyVillamaria(){return listaDeService.listBoyVillamaria();}
+
+    //metodo que me permite listar los niños de neira y me retorna lo que esta ubicado en el servicio
+    @GetMapping(path = "listBoyNeira")
+    public ResponseEntity<ResponseDTO> listBoyNeira(){return listaDeService.listBoyNeira();}
+
+    //metodo que me permite listar los niños de chinchina,manizales,neira y villamaria por medio concatenacion
+    // y me retorna lo que esta ubicado en el servicio de cada uno.
+    @GetMapping(path = "listAll")
+    public ResponseEntity<ResponseDTO> listBoyAll(){return listaDeService.listBoyChinchina(),
+        listaDeService.listBoyManizales(),
+                listaDeService.listBoyNeira(),
+                listaDeService.listBoyVillamaria();}
+
+
 }
 

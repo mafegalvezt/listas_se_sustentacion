@@ -8,6 +8,8 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+
+//metodo para estandarizar la respuesta de mi servicio
 public class ResponseDTO {
     private String message;
     private Object data;
